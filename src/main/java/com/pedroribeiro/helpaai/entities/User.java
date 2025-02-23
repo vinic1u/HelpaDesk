@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Table(name = "tb_usuario")
 @Entity
 @AllArgsConstructor
@@ -26,6 +29,7 @@ public class User {
     @Column(name = "telefone",nullable = false,length = 20,unique = true)
     private String phone;
 
-
-
+    @ManyToOne
+    @JoinColumn(name = "id_setor")
+    private Sector sector;
 }

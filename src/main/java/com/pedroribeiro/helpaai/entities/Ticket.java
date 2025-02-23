@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Table(name = "tb_chamado")
 @Entity
@@ -37,4 +39,18 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @OneToMany(mappedBy = "ticket")
+    private List<Observation> observations = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "id_categoria")
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "id_cliente")
+    private User client;
+
+    @ManyToOne
+    @JoinColumn(name = "id_operador")
+    private User operator;
 }

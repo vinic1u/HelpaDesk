@@ -18,4 +18,9 @@ public class Observation {
 
     @Column(columnDefinition = "TEXT",name = "observacao",nullable = false)
     private String observation;
+
+
+    @ManyToOne
+    @JoinColumn(name = "id_chamado")
+    private Ticket ticket;
 }
