@@ -23,4 +23,8 @@ public class Observation {
     @ManyToOne
     @JoinColumn(name = "id_chamado")
     private Ticket ticket;
+
+    @ManyToOne
+    @JoinColumn(name = "id_autor")
+    private User user;
 }
