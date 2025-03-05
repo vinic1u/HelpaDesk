@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -21,7 +22,8 @@ public class Observation {
     @Column(columnDefinition = "TEXT",name = "observacao",nullable = false)
     private String observation;
 
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE",name = "criado_em",nullable = false)
+    @CreationTimestamp
+    @Column(nullable = false,updatable = false)
     private LocalDateTime createdAt;
 
     @ManyToOne

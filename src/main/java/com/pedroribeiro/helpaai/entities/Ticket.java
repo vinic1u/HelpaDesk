@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -29,10 +30,12 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private Priority priority;
 
-    @Column(name = "criado_em",nullable = false)
+    @CreationTimestamp
+    @Column(name = "criado_em",nullable = false,updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "ultima_interacao",nullable = false)
+    @CreationTimestamp
+    @Column(name = "ultima_interacao",nullable = false,updatable = false)
     private LocalDateTime lastInteraction;
 
     @Column(name = "status_enum")
