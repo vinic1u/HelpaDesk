@@ -30,10 +30,10 @@ public class Ticket {
     private Priority priority;
 
     @Column(name = "criado_em",nullable = false)
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @Column(name = "ultima_interacao",nullable = false)
-    private LocalDateTime last_interaction;
+    private LocalDateTime lastInteraction;
 
     @Column(name = "status_enum")
     @Enumerated(EnumType.STRING)
