@@ -42,7 +42,7 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @OneToMany(mappedBy = "ticket")
+    @OneToMany(mappedBy = "ticket",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Observation> observations = new ArrayList<>();
 
     @ManyToOne
