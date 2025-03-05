@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Table(name = "tb_observacao")
 @Entity
@@ -19,8 +22,15 @@ public class Observation {
     @Column(columnDefinition = "TEXT",name = "observacao",nullable = false)
     private String observation;
 
+    @CreationTimestamp
+    @Column(nullable = false,updatable = false)
+    private LocalDateTime createdAt;
 
     @ManyToOne
     @JoinColumn(name = "id_chamado")
     private Ticket ticket;
+
+    @ManyToOne
+    @JoinColumn(name = "id_autor")
+    private User user;
 }

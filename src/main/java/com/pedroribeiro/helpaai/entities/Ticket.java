@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -29,17 +30,19 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private Priority priority;
 
-    @Column(name = "criado_em",nullable = false)
-    private LocalDateTime created_at;
+    @CreationTimestamp
+    @Column(name = "criado_em",nullable = false,updatable = false)
+    private LocalDateTime createdAt;
 
-    @Column(name = "ultima_interacao",nullable = false)
-    private LocalDateTime last_interaction;
+    @CreationTimestamp
+    @Column(name = "ultima_interacao",nullable = false,updatable = false)
+    private LocalDateTime lastInteraction;
 
     @Column(name = "status_enum")
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @OneToMany(mappedBy = "ticket")
+    @OneToMany(mappedBy = "ticket",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Observation> observations = new ArrayList<>();
 
     @ManyToOne
