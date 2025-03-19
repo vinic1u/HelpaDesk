@@ -74,4 +74,17 @@ public class TicketService {
         ticketRepository.save(ticket);
         return new TicketResponseDTO(ticket);
     }
+
+    public TicketResponseDTO createObservation(Integer id,ObservationRequestDTO dto){
+        Ticket ticket = ticketRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("Ticket de ID: " + id + " não encontrado!"));
+
+        Observation observation = new Observation();
+        observation.setObservation(dto.getObservation());
+        observation.setTicket(ticket);
+        // TO DO author mapping
+        ticket.getObservations().add(observation);
+        ticketRepository.save(ticket);
+        return new TicketResponseDTO(ticket);
+    }
 }
