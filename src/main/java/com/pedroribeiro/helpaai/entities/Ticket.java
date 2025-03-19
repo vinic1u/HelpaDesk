@@ -26,7 +26,7 @@ public class Ticket {
     @Column(name = "titulo",nullable = false,length = 100)
     private String title;
 
-    @Column(name = "prioridade_enum")
+    @Column(name = "prioridade")
     @Enumerated(EnumType.STRING)
     private Priority priority;
 
@@ -38,7 +38,7 @@ public class Ticket {
     @Column(name = "ultima_interacao",nullable = false,updatable = false)
     private LocalDateTime lastInteraction;
 
-    @Column(name = "status_enum")
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private Status status;
 
