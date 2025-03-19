@@ -24,5 +24,7 @@ public class ObservationResponseDTO {
 
     public ObservationResponseDTO(Observation entity){
         this.observation = entity.getObservation();
+        // TO DO Author
+        this.createdAt = entity.getCreatedAt();
     }
 }
