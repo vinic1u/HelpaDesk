@@ -41,8 +41,8 @@ public class TicketService {
     public TicketResponseDTO saveTicket(TicketRequestDTO dto){
         Ticket ticket = new Ticket();
         ticket.setTitle(dto.getTitle());
-        ticket.setPriority(Priority.BAIXA);
-        ticket.setStatus(Status.PENDENTE_OPERADOR);
+        ticket.setPriority(dto.getPriority());
+        ticket.setStatus(dto.getStatus());
 
         Category category = categoryRepository.findById(dto.getCategoryId())
                 .orElseThrow(()-> new ResourceNotFoundException("Categoria com ID: " +  dto.getCategoryId() + " não encontrada!"));
