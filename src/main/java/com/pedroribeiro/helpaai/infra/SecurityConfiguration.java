@@ -22,6 +22,9 @@ public class SecurityConfiguration {
     @Autowired
     private SecurityFilter securityFilter;
 
+    @Autowired
+    private  CustomCorsConfiguration customCorsConfiguration;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -37,6 +40,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.PUT,"/api/categories","/api/sectors").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
+                .cors(c -> c.configurationSource(customCorsConfiguration))
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
