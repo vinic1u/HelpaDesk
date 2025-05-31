@@ -4,6 +4,7 @@ import com.pedroribeiro.helpaai.dtos.observation.ObservationRequestDTO;
 import com.pedroribeiro.helpaai.dtos.ticket.TicketRequestDTO;
 import com.pedroribeiro.helpaai.dtos.ticket.TicketResponseDTO;
 import com.pedroribeiro.helpaai.services.TicketService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class TicketController {
 
     @PostMapping
     public ResponseEntity<TicketResponseDTO> saveTicket(
-            @RequestBody TicketRequestDTO dto
+            @Valid @RequestBody TicketRequestDTO dto
             ){
         TicketResponseDTO response = ticketService.saveTicket(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -43,7 +44,7 @@ public class TicketController {
     @PutMapping(value = "/{id}")
     public ResponseEntity<TicketResponseDTO> updateTicket(
             @PathVariable("id") Integer id,
-            @RequestBody TicketRequestDTO dto
+            @Valid @RequestBody TicketRequestDTO dto
     ){
         TicketResponseDTO response = ticketService.updateTicket(id,dto);
         return ResponseEntity.ok(response);
@@ -52,7 +53,7 @@ public class TicketController {
     @PostMapping(value = "/{id}/observation")
     public ResponseEntity<TicketResponseDTO> createObservation(
             @PathVariable("id") Integer id,
-            @RequestBody ObservationRequestDTO dto
+            @Valid @RequestBody ObservationRequestDTO dto
             ){
         TicketResponseDTO response = ticketService.createObservation(id,dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

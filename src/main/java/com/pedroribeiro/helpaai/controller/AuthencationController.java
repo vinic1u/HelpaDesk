@@ -8,6 +8,7 @@ import com.pedroribeiro.helpaai.exceptions.AlreadyRegisteredException;
 import com.pedroribeiro.helpaai.infra.TokenService;
 import com.pedroribeiro.helpaai.repositories.UserRepository;
 import com.pedroribeiro.helpaai.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,14 +29,14 @@ public class AuthencationController {
 
     @PostMapping("/login")
     public ResponseEntity login(
-            @RequestBody AuthencationLoginDTO dto){
+            @Valid @RequestBody AuthencationLoginDTO dto){
         LoginResponseDTO token = userService.loginUser(dto);
         return ResponseEntity.ok(token);
     }
 
     @PostMapping("/register")
     public ResponseEntity register(
-            @RequestBody AuthencationRegisterDTO dto
+            @Valid @RequestBody AuthencationRegisterDTO dto
             ){
         String response = userService.registerUser(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();

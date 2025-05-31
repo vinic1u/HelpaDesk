@@ -25,8 +25,6 @@ public class SecurityConfiguration {
     @Autowired
     private  CustomCorsConfiguration customCorsConfiguration;
 
-    @Autowired
-    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -42,7 +40,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST,"/api/categories","/api/sectors").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT,"/api/categories","/api/sectors").hasRole("ADMIN")
                         .anyRequest().authenticated()
-                ).exceptionHandling((ex) -> ex.authenticationEntryPoint(customAuthenticationEntryPoint))
+                )
                 .cors(c -> c.configurationSource(customCorsConfiguration))
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

@@ -5,6 +5,7 @@ import com.pedroribeiro.helpaai.dtos.category.CategoryResponseDTO;
 import com.pedroribeiro.helpaai.dtos.sector.SectorRequestDTO;
 import com.pedroribeiro.helpaai.dtos.sector.SectorResponseDTO;
 import com.pedroribeiro.helpaai.services.SectorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class SectorController {
 
     @PostMapping
     public ResponseEntity<SectorResponseDTO> saveSector(
-            @RequestBody SectorRequestDTO dto
+            @Valid @RequestBody SectorRequestDTO dto
     ){
         SectorResponseDTO response = sectorService.saveSector(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -43,7 +44,7 @@ public class SectorController {
     @PutMapping(value = "/{id}")
     public ResponseEntity<SectorResponseDTO> updateSector(
             @PathVariable("id") Integer id,
-            @RequestBody SectorRequestDTO dto
+            @Valid @RequestBody SectorRequestDTO dto
     ){
         SectorResponseDTO response = sectorService.updateSector(id,dto);
         return ResponseEntity.ok(response);
