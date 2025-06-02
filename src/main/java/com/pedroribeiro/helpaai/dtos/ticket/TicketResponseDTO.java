@@ -49,5 +49,10 @@ public class TicketResponseDTO {
         this.status = entity.getStatus();
         this.observations = entity.getObservations().stream().map(ObservationResponseDTO::new).toList();
         this.category = new CategoryResponseDTO(entity.getCategory());
+
+        this.client = entity.getClient() != null ? new UserResponseDTO(entity.getClient())
+                : null;
+
+        this.operator = entity.getOperator() != null ? new UserResponseDTO(entity.getOperator()) : null;
     }
 }
