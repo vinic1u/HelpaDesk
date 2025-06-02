@@ -23,7 +23,7 @@ public class Observation {
     private String observation;
 
     @CreationTimestamp
-    @Column(nullable = false,updatable = false)
+    @Column(name = "criado_em",nullable = false,updatable = false)
     private LocalDateTime createdAt;
 
     @ManyToOne

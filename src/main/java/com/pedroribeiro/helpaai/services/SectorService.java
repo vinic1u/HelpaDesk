@@ -35,7 +35,7 @@ public class SectorService {
         return new SectorResponseDTO(sector);
     }
 
-    public SectorResponseDTO updateSector(Integer id,SectorResponseDTO dto){
+    public SectorResponseDTO updateSector(Integer id,SectorRequestDTO dto){
         Sector sector = sectorRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Setor com ID: " + id + " não encontrado!"));
         sector.setName(dto.getName());
