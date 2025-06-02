@@ -4,6 +4,7 @@ import com.pedroribeiro.helpaai.dtos.exceptions.CustomError;
 import com.pedroribeiro.helpaai.dtos.exceptions.CustomFieldError;
 import com.pedroribeiro.helpaai.dtos.exceptions.CustomFieldErrorMessage;
 import com.pedroribeiro.helpaai.exceptions.AlreadyRegisteredException;
+import com.pedroribeiro.helpaai.exceptions.NotAllowedException;
 import com.pedroribeiro.helpaai.exceptions.ResourceNotFoundException;
 import com.pedroribeiro.helpaai.exceptions.TokenNotValidException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -46,6 +47,13 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<CustomError> handleResourceNotFoundException(HttpServletRequest req,ResourceNotFoundException exception){
         HttpStatus http = HttpStatus.NOT_FOUND;
+        CustomError customError = new CustomError(http.value(),exception.getMessage());
+        return new ResponseEntity<>(customError,http);
+    }
+
+    @ExceptionHandler(NotAllowedException.class)
+    public ResponseEntity<CustomError> handleNotAllowedException(HttpServletRequest req,NotAllowedException exception){
+        HttpStatus http = HttpStatus.UNAUTHORIZED;
         CustomError customError = new CustomError(http.value(),exception.getMessage());
         return new ResponseEntity<>(customError,http);
     }
