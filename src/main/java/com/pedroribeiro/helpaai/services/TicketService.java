@@ -109,6 +109,7 @@ public class TicketService {
         Observation observation = new Observation();
         observation.setObservation(dto.getObservation());
         observation.setTicket(ticket);
+        observation.setUser(user);
         // TO DO author mapping
         ticket.getObservations().add(observation);
         ticketRepository.save(ticket);
