@@ -29,6 +29,7 @@ public class AuthencationRegisterDTO {
     @NotEmpty(message = "Senha não pode estar em branco")
     private String password;
 
-    // Cuidar disso depois
-    private UserRole role;
+    @NotNull(message = "Senha deve ser informada")
+    @NotEmpty(message = "Senha não pode estar em branco")
+    private String repeatPassword;
 }
