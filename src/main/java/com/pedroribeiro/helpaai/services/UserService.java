@@ -67,7 +67,10 @@ public class    UserService {
     }
 
     public String registerUser(AuthencationRegisterDTO dto){
-        if(userRepository.findByEmail(dto.getEmail()) != null) throw new AlreadyRegisteredException("User already Registered");
+        if(userRepository.findByEmail(dto.getEmail()) != null) throw new AlreadyRegisteredException("Email already Registered");
+
+        if(userRepository.findByPhone(dto.getPhone()) != null) throw new AlreadyRegisteredException("Phone Already Registered");
+
 
         if(!(dto.getPassword().equals(dto.getRepeatPassword()))){
             throw  new NotAllowedException("Senhas não são iguais!");
