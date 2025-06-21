@@ -5,6 +5,7 @@ import com.pedroribeiro.helpaai.dtos.auth.AuthencationRegisterDTO;
 import com.pedroribeiro.helpaai.dtos.auth.LoginResponseDTO;
 import com.pedroribeiro.helpaai.dtos.user.UserRequestDTO;
 import com.pedroribeiro.helpaai.dtos.user.UserResponseDTO;
+import com.pedroribeiro.helpaai.dtos.user.UserUpdateRequestDTO;
 import com.pedroribeiro.helpaai.entities.Sector;
 import com.pedroribeiro.helpaai.entities.User;
 import com.pedroribeiro.helpaai.enums.UserRole;
@@ -19,6 +20,8 @@ import org.springframework.core.MethodParameter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -91,5 +94,21 @@ public class    UserService {
         var auth = this.authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((User) auth.getPrincipal());
         return new LoginResponseDTO(token);
+    }
+
+    // Profile Handle
+    public UserResponseDTO getMyUserData(User user){
+        return new UserResponseDTO(user);
+    }
+
+    public String updateMyUserData(User user, UserUpdateRequestDTO dto){
+        user.setName(dto.getName());
+
+        Sector sector = sectorRepository.findById(dto.getSectorId())
+                .orElseThrow(() -> new ResourceNotFoundException("Setor não encontrado!"));
+        user.setSector(sector);
+
+        userRepository.save(user);
+        return "Updated successfully";
     }
 }
