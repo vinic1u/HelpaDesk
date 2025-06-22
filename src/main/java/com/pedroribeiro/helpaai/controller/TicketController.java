@@ -55,6 +55,15 @@ public class TicketController {
         return ResponseEntity.ok(response);
     }
 
+    @PutMapping(value= "/{id}/atribuir")
+    public ResponseEntity<String> assignTicket(
+            @AuthenticationPrincipal User user,
+            @PathVariable Integer id
+    ){
+        String response = ticketService.assignTicket(user,id);
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping(value = "/{id}/observation")
     public ResponseEntity<TicketResponseDTO> createObservation(
             @AuthenticationPrincipal User user,

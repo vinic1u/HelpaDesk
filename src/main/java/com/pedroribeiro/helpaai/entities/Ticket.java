@@ -35,7 +35,7 @@ public class Ticket {
     private LocalDateTime createdAt;
 
     @CreationTimestamp
-    @Column(name = "ultima_interacao",nullable = false,updatable = false)
+    @Column(name = "ultima_interacao",nullable = false,updatable = true)
     private LocalDateTime lastInteraction;
 
     @Column(name = "status")

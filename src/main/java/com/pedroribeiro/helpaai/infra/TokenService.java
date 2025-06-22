@@ -24,6 +24,7 @@ public class TokenService {
             String token  = JWT.create()
                     .withIssuer("HelpaDesk")
                     .withSubject(user.getEmail())
+                    .withClaim("role",user.getRole().name())
                     .withExpiresAt(getExpirationDate())
                     .sign(algorithm);
             return token;

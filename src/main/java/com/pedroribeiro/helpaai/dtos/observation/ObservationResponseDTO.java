@@ -24,7 +24,7 @@ public class ObservationResponseDTO {
 
     public ObservationResponseDTO(Observation entity){
         this.observation = entity.getObservation();
-        // TO DO Author
+        this.author = entity.getUser() != null ? new UserResponseDTO(entity.getUser()) : null;
         this.createdAt = entity.getCreatedAt();
     }
 }

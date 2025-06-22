@@ -22,6 +22,6 @@ public class UserResponseDTO {
         this.name = entity.getName();
         this.email = entity.getEmail();
         this.phone = entity.getPhone();
-        this.sector = new SectorResponseDTO(entity.getSector());
+        this.sector = entity.getSector() != null ? new SectorResponseDTO(entity.getSector()) : null;
     }
 }
