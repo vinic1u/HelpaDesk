@@ -50,7 +50,7 @@ public class TicketService {
                 .orElseThrow(()-> new ResourceNotFoundException("Ticket com ID: " + id + " não encontrado!"));
 
 
-        if(!(ticket.getClient().getId().equals(user.getId())) & user.getRole() != UserRole.OPERATOR ){
+        if(!(ticket.getClient().getId().equals(user.getId())) & user.getRole() != UserRole.OPERATOR && user.getRole() != UserRole.ADMIN ){
             throw new NotAllowedException("Você não tem permissão para alterar este chamado!");
         }
 
@@ -108,7 +108,7 @@ public class TicketService {
         Ticket ticket = ticketRepository.findById(id)
                 .orElseThrow(()->new ResourceNotFoundException("Ticket de ID: " + id + " não encontrado!"));
 
-        if(!(ticket.getClient().getId().equals(user.getId())) & user.getRole() != UserRole.OPERATOR ){
+        if(!(ticket.getClient().getId().equals(user.getId())) & user.getRole() != UserRole.OPERATOR && user.getRole() != UserRole.ADMIN){
             throw new NotAllowedException("Você não tem permissão para alterar este chamado!");
         }
 
@@ -126,7 +126,7 @@ public class TicketService {
         Ticket ticket = ticketRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Ticket de ID: " + id + " não encontrado!"));
 
-        if(user.getRole() != UserRole.OPERATOR) throw new NotAllowedException("Usuario não é um operador para designar chamados");
+        if(user.getRole() != UserRole.OPERATOR && user.getRole() != UserRole.ADMIN) throw new NotAllowedException("Usuario não é um operador para designar chamados");
 
         ticket.setOperator(user);
         ticketRepository.save(ticket);
