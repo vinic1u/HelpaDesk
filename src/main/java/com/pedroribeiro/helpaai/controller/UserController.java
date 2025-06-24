@@ -1,5 +1,7 @@
 package com.pedroribeiro.helpaai.controller;
 
+import com.pedroribeiro.helpaai.dtos.user.UserAdminRequestDTO;
+import com.pedroribeiro.helpaai.dtos.user.UserAdminResponseDTO;
 import com.pedroribeiro.helpaai.dtos.user.UserResponseDTO;
 import com.pedroribeiro.helpaai.dtos.user.UserUpdateRequestDTO;
 import com.pedroribeiro.helpaai.entities.User;
@@ -21,7 +23,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<UserResponseDTO>> findAllUsers(){
+    public ResponseEntity<List<UserAdminResponseDTO>> findAllUsers(){
         return ResponseEntity.ok(userService.findAllUsers());
     }
 
@@ -30,6 +32,15 @@ public class UserController {
             @PathVariable Integer  id
     ){
         return ResponseEntity.ok(userService.findUserById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateUserById(
+            @PathVariable Integer id,
+            @RequestBody UserAdminRequestDTO dto
+    ){
+        String response = userService.updateUser(id,dto);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/me")

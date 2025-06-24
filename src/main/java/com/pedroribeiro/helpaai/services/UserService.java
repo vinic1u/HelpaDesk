@@ -3,9 +3,7 @@ package com.pedroribeiro.helpaai.services;
 import com.pedroribeiro.helpaai.dtos.auth.AuthencationLoginDTO;
 import com.pedroribeiro.helpaai.dtos.auth.AuthencationRegisterDTO;
 import com.pedroribeiro.helpaai.dtos.auth.LoginResponseDTO;
-import com.pedroribeiro.helpaai.dtos.user.UserRequestDTO;
-import com.pedroribeiro.helpaai.dtos.user.UserResponseDTO;
-import com.pedroribeiro.helpaai.dtos.user.UserUpdateRequestDTO;
+import com.pedroribeiro.helpaai.dtos.user.*;
 import com.pedroribeiro.helpaai.entities.Sector;
 import com.pedroribeiro.helpaai.entities.User;
 import com.pedroribeiro.helpaai.enums.UserRole;
@@ -44,9 +42,9 @@ public class    UserService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public List<UserResponseDTO> findAllUsers(){
+    public List<UserAdminResponseDTO> findAllUsers(){
         List<User> users = userRepository.findAll();
-        return users.stream().map(UserResponseDTO::new).toList();
+        return users.stream().map(UserAdminResponseDTO::new).toList();
     }
 
     public UserResponseDTO findUserById(Integer id){
@@ -108,6 +106,21 @@ public class    UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("Setor não encontrado!"));
         user.setSector(sector);
 
+        userRepository.save(user);
+        return "Updated successfully";
+    }
+
+    public String updateUser(Integer id, UserAdminRequestDTO dto){
+        User user = userRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("Usuario não encontrado!"));
+
+        user.setName(dto.getName());
+        Sector sector = sectorRepository.findById(dto.getSectorId())
+                .orElseThrow(() -> new ResourceNotFoundException("Setor não encontrado!"));
+        user.setSector(sector);
+
+        UserRole userRole = UserRole.valueOf(dto.getUserRole());
+        user.setRole(userRole);
         userRepository.save(user);
         return "Updated successfully";
     }
