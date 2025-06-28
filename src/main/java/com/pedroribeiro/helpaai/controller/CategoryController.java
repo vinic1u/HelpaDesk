@@ -1,5 +1,6 @@
 package com.pedroribeiro.helpaai.controller;
 
+import com.pedroribeiro.helpaai.dtos.category.CategoryAdminResponseDTO;
 import com.pedroribeiro.helpaai.dtos.category.CategoryRequestDTO;
 import com.pedroribeiro.helpaai.dtos.category.CategoryResponseDTO;
 import com.pedroribeiro.helpaai.services.CategoryService;
@@ -19,7 +20,12 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<CategoryResponseDTO>> findAllCategories(){
+    public ResponseEntity<List<CategoryResponseDTO>> findAllCategoriesEnable(){
+        return ResponseEntity.ok(categoryService.findAllCategoriesEnable());
+    }
+
+    @GetMapping("/admin")
+    public ResponseEntity<List<CategoryAdminResponseDTO>> findAllCategories(){
         return ResponseEntity.ok(categoryService.findAllCategories());
     }
 
@@ -45,5 +51,13 @@ public class CategoryController {
     ){
         CategoryResponseDTO response = categoryService.updateCategory(id,dto);
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteCategory(
+            @PathVariable("id") Integer id
+    ){
+        categoryService.deleteCategory(id);
+        return ResponseEntity.noContent().build();
     }
 }

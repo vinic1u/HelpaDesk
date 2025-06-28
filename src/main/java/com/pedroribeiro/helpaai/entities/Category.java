@@ -22,6 +22,9 @@ public class Category {
     @Column(name = "categoria",nullable = false,unique = true,length = 100)
     private String name;
 
+    @Column(name = "in_exclusao")
+    private Boolean deleted;
+
     @OneToMany(mappedBy = "category")
     private List<Ticket> tickets = new ArrayList<>();
 }
