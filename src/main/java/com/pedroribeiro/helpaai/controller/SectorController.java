@@ -2,6 +2,7 @@ package com.pedroribeiro.helpaai.controller;
 
 import com.pedroribeiro.helpaai.dtos.category.CategoryRequestDTO;
 import com.pedroribeiro.helpaai.dtos.category.CategoryResponseDTO;
+import com.pedroribeiro.helpaai.dtos.sector.SectorAdminResponseDTO;
 import com.pedroribeiro.helpaai.dtos.sector.SectorRequestDTO;
 import com.pedroribeiro.helpaai.dtos.sector.SectorResponseDTO;
 import com.pedroribeiro.helpaai.services.SectorService;
@@ -22,7 +23,12 @@ public class SectorController {
 
 
     @GetMapping
-    public ResponseEntity<List<SectorResponseDTO>> findAllSectors(){
+    public ResponseEntity<List<SectorResponseDTO>> findAllSectorsEnable(){
+        return ResponseEntity.ok(sectorService.findAllSectorsEnabled());
+    }
+
+    @GetMapping("/admin")
+    public ResponseEntity<List<SectorAdminResponseDTO>> findAllSectors(){
         return ResponseEntity.ok(sectorService.findAllSectors());
     }
 
@@ -48,5 +54,13 @@ public class SectorController {
     ){
         SectorResponseDTO response = sectorService.updateSector(id,dto);
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteSector(
+            @PathVariable("id") Integer id
+    ){
+        sectorService.deleteSector(id);
+        return ResponseEntity.noContent().build();
     }
 }
