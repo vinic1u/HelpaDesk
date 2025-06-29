@@ -4,6 +4,7 @@ import com.pedroribeiro.helpaai.dtos.category.CategoryAdminResponseDTO;
 import com.pedroribeiro.helpaai.dtos.category.CategoryRequestDTO;
 import com.pedroribeiro.helpaai.dtos.category.CategoryResponseDTO;
 import com.pedroribeiro.helpaai.entities.Category;
+import com.pedroribeiro.helpaai.exceptions.AlreadyRegisteredException;
 import com.pedroribeiro.helpaai.exceptions.ResourceNotFoundException;
 import com.pedroribeiro.helpaai.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,9 @@ public class CategoryService {
     }
 
     public CategoryResponseDTO saveCategory(CategoryRequestDTO dto){
+        Category alredyExists = categoryRepository.findByName(dto.getName());
+        if(alredyExists != null) throw new AlreadyRegisteredException("Categoria já Cadastrada!");
+
         Category category = new Category();
         category.setName(dto.getName());
         category.setDeleted(false);
