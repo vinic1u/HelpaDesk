@@ -68,13 +68,13 @@ public class    UserService {
     }
 
     public String registerUser(AuthencationRegisterDTO dto){
-        if(userRepository.findByEmail(dto.getEmail()) != null) throw new AlreadyRegisteredException("Email already Registered");
+        if(userRepository.findByEmail(dto.getEmail()) != null) throw new AlreadyRegisteredException("Email já Cadastrado");
 
-        if(userRepository.findByPhone(dto.getPhone()) != null) throw new AlreadyRegisteredException("Phone Already Registered");
+        if(userRepository.findByPhone(dto.getPhone()) != null) throw new AlreadyRegisteredException("Telefone Já Cadastrado");
 
 
         if(!(dto.getPassword().equals(dto.getRepeatPassword()))){
-            throw  new NotAllowedException("Senhas não são iguais!");
+            throw  new NotAllowedException("Confirmação de senha incorreta.");
         }
         String encryptedPassword = new BCryptPasswordEncoder().encode(dto.getPassword());
         User user = new User();
