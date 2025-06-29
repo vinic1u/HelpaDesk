@@ -3,6 +3,7 @@ package com.pedroribeiro.helpaai.services;
 import com.pedroribeiro.helpaai.dtos.observation.ObservationRequestDTO;
 import com.pedroribeiro.helpaai.dtos.ticket.TicketRequestDTO;
 import com.pedroribeiro.helpaai.dtos.ticket.TicketResponseDTO;
+import com.pedroribeiro.helpaai.dtos.ticket.TicketUpdateRequestDTO;
 import com.pedroribeiro.helpaai.entities.Category;
 import com.pedroribeiro.helpaai.entities.Observation;
 import com.pedroribeiro.helpaai.entities.Ticket;
@@ -82,7 +83,7 @@ public class TicketService {
         return new TicketResponseDTO(ticket);
     }
 
-    public TicketResponseDTO updateTicket(User user,Integer id,TicketRequestDTO dto){
+    public TicketResponseDTO updateTicket(User user, Integer id, TicketUpdateRequestDTO dto){
         Ticket ticket = ticketRepository.findById(id)
                         .orElseThrow(()->new ResourceNotFoundException("Ticket de ID: " + id + " não encontrado!"));
 
@@ -90,16 +91,13 @@ public class TicketService {
             throw new NotAllowedException("Você não tem permissão para alterar este chamado!");
         }
 
-        ticket.setTitle(dto.getTitle());
         ticket.setPriority(dto.getPriority());
         ticket.setStatus(dto.getStatus());
-
         Category category = categoryRepository.findById(dto.getCategoryId())
                 .orElseThrow(()-> new ResourceNotFoundException("Categoria com ID: " +  dto.getCategoryId() + " não encontrada!"));
         ticket.setCategory(category);
 
         ticket.setLastInteraction(LocalDateTime.now());
-
         ticketRepository.save(ticket);
         return new TicketResponseDTO(ticket);
     }
