@@ -3,6 +3,7 @@ package com.pedroribeiro.helpaai.services;
 import com.pedroribeiro.helpaai.dtos.observation.ObservationRequestDTO;
 import com.pedroribeiro.helpaai.dtos.ticket.TicketRequestDTO;
 import com.pedroribeiro.helpaai.dtos.ticket.TicketResponseDTO;
+import com.pedroribeiro.helpaai.dtos.ticket.TicketUpdateRequestDTO;
 import com.pedroribeiro.helpaai.entities.Category;
 import com.pedroribeiro.helpaai.entities.Observation;
 import com.pedroribeiro.helpaai.entities.Ticket;
@@ -50,7 +51,7 @@ public class TicketService {
                 .orElseThrow(()-> new ResourceNotFoundException("Ticket com ID: " + id + " não encontrado!"));
 
 
-        if(!(ticket.getClient().getId().equals(user.getId())) & user.getRole() != UserRole.OPERATOR ){
+        if(!(ticket.getClient().getId().equals(user.getId())) & user.getRole() != UserRole.OPERATOR && user.getRole() != UserRole.ADMIN ){
             throw new NotAllowedException("Você não tem permissão para alterar este chamado!");
         }
 
@@ -82,24 +83,21 @@ public class TicketService {
         return new TicketResponseDTO(ticket);
     }
 
-    public TicketResponseDTO updateTicket(User user,Integer id,TicketRequestDTO dto){
+    public TicketResponseDTO updateTicket(User user, Integer id, TicketUpdateRequestDTO dto){
         Ticket ticket = ticketRepository.findById(id)
                         .orElseThrow(()->new ResourceNotFoundException("Ticket de ID: " + id + " não encontrado!"));
 
-        if(!(ticket.getClient().getId().equals(user.getId()))){
+        if(!(ticket.getClient().getId().equals(user.getId())  && user.getRole() != UserRole.ADMIN )){
             throw new NotAllowedException("Você não tem permissão para alterar este chamado!");
         }
 
-        ticket.setTitle(dto.getTitle());
         ticket.setPriority(dto.getPriority());
         ticket.setStatus(dto.getStatus());
-
         Category category = categoryRepository.findById(dto.getCategoryId())
                 .orElseThrow(()-> new ResourceNotFoundException("Categoria com ID: " +  dto.getCategoryId() + " não encontrada!"));
         ticket.setCategory(category);
 
         ticket.setLastInteraction(LocalDateTime.now());
-
         ticketRepository.save(ticket);
         return new TicketResponseDTO(ticket);
     }
@@ -108,7 +106,7 @@ public class TicketService {
         Ticket ticket = ticketRepository.findById(id)
                 .orElseThrow(()->new ResourceNotFoundException("Ticket de ID: " + id + " não encontrado!"));
 
-        if(!(ticket.getClient().getId().equals(user.getId())) & user.getRole() != UserRole.OPERATOR ){
+        if(!(ticket.getClient().getId().equals(user.getId())) & user.getRole() != UserRole.OPERATOR && user.getRole() != UserRole.ADMIN){
             throw new NotAllowedException("Você não tem permissão para alterar este chamado!");
         }
 
@@ -126,7 +124,7 @@ public class TicketService {
         Ticket ticket = ticketRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Ticket de ID: " + id + " não encontrado!"));
 
-        if(user.getRole() != UserRole.OPERATOR) throw new NotAllowedException("Usuario não é um operador para designar chamados");
+        if(user.getRole() != UserRole.OPERATOR && user.getRole() != UserRole.ADMIN) throw new NotAllowedException("Usuario não é um operador para designar chamados");
 
         ticket.setOperator(user);
         ticketRepository.save(ticket);

@@ -3,6 +3,7 @@ package com.pedroribeiro.helpaai.controller;
 import com.pedroribeiro.helpaai.dtos.observation.ObservationRequestDTO;
 import com.pedroribeiro.helpaai.dtos.ticket.TicketRequestDTO;
 import com.pedroribeiro.helpaai.dtos.ticket.TicketResponseDTO;
+import com.pedroribeiro.helpaai.dtos.ticket.TicketUpdateRequestDTO;
 import com.pedroribeiro.helpaai.entities.User;
 import com.pedroribeiro.helpaai.services.TicketService;
 import jakarta.validation.Valid;
@@ -49,7 +50,7 @@ public class TicketController {
     public ResponseEntity<TicketResponseDTO> updateTicket(
             @AuthenticationPrincipal User user,
             @PathVariable("id") Integer id,
-            @Valid @RequestBody TicketRequestDTO dto
+            @Valid @RequestBody TicketUpdateRequestDTO dto
     ){
         TicketResponseDTO response = ticketService.updateTicket(user,id,dto);
         return ResponseEntity.ok(response);

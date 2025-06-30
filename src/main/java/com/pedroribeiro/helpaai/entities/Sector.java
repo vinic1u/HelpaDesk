@@ -22,6 +22,9 @@ public class Sector {
     @Column(name = "nome",nullable = false,unique = true,length = 150)
     private String name;
 
+    @Column(name = "in_exclusao")
+    private Boolean deleted;
+
     @OneToMany(mappedBy = "sector")
     private List<User> users = new ArrayList<>();
 }
