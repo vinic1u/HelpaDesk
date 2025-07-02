@@ -127,6 +127,7 @@ public class TicketService {
         if(user.getRole() != UserRole.OPERATOR && user.getRole() != UserRole.ADMIN) throw new NotAllowedException("Usuario não é um operador para designar chamados");
 
         ticket.setOperator(user);
+        ticket.setStatus(Status.PENDENTE_CLIENTE);
         ticketRepository.save(ticket);
         return "Chamado Atribuido com sucesso!";
     }
